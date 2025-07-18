@@ -1,0 +1,278 @@
+/* =========================================================
+   PALETA, FUENTE Y UTILIDADES
+   ========================================================= */
+:root{
+  /* — colores — */
+  --rosa:#ff8da9;
+  --rosa-claro:#ff8ab0;
+  --gris:#cccccc;
+  --gris-oscuro:#444;
+  --bg-blanco:#fffdfd;
+  --bg-gradiente:linear-gradient(180deg,#fff 0%,#ffe5ef 100%);
+
+  /* — fuente — */
+  --fuente:'Quicksand','Segoe UI',sans-serif;
+
+  /* — sombras reutilizables — */
+  --sombra-xs:0 2px 4px rgba(0,0,0,.08);
+  --sombra-sm:0 4px 8px rgba(0,0,0,.12);
+  --sombra-lg:0 8px 20px rgba(0,0,0,.15);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+
+/* =========================================================
+   RESET BÁSICO
+   ========================================================= */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:var(--fuente);
+}
+
+/* Morado pastel por defecto */
+body{
+  background:#c93caa;
+  color:var(--gris-oscuro);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* Fondo rojo SOLO para index.html */
+.fondo-rojo{
+  background:#b81013 !important;
+}
+
+/* =========================================================
+   GALERÍA ESTILO CORTINA (index.html)
+   ========================================================= */
+#galeria{
+  display:flex;
+  height:100vh;
+  overflow:hidden;
+}
+
+.foto{
+  flex:1;
+  min-height:100vh;
+  background-position:center;
+  background-size:cover;
+  transform:translateY(0);
+  transition:transform 1s ease-in-out;
+}
+
+/* se moverán fuera de pantalla; el JS las quita para “abrir” */
+.foto.arriba{ transform:translateY(-100%); }
+.foto.abajo { transform:translateY( 100%); }
+
+/* =========================================================
+   SECCIÓN DE LA PREGUNTA (index.html)
+   ========================================================= */
+#pregunta{
+  position:fixed;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:1.75rem;
+  background:transparent;
+  text-align:center;
+}
+
+#pregunta h1{
+  font-size:2.3rem;
+  background:linear-gradient(90deg,var(--rosa) 0%,var(--rosa-claro) 100%);
+  background-clip:text;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent;
+}
+
+#pregunta button{
+  padding:0.9rem 2.3rem;
+  font-size:1.05rem;
+  font-weight:600;
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+  transition:transform .2s, box-shadow .2s;
+  box-shadow:var(--sombra-xs);
+}
+
+#pregunta button:hover{
+  transform:translateY(-3px) scale(1.05);
+  box-shadow:var(--sombra-sm);
+}
+
+#btn-si{
+  background:var(--rosa);
+  color:var(--bg-blanco);
+}
+
+#btn-no{
+  background:var(--gris);
+  color:#333;
+  /* position:absolute;  <= eliminado para que arranque alineado */
+}
+
+/* para ocultar elementos con JS */
+.oculto{ display:none; }
+
+/* =========================================================
+   CORAZONES FLOTANTES
+   ========================================================= */
+.heart{
+  position:fixed;
+  font-size:24px;
+  animation:flotar 6s linear infinite;
+  opacity:0;
+  pointer-events:none;
+  z-index:9999;
+}
+
+@keyframes flotar{
+  0%   {transform:translateY(0)   scale(.5); opacity:0;}
+  10%  {opacity:1;}
+  100% {transform:translateY(-120vh) scale(1); opacity:0;}
+}
+
+/* =========================================================
+   BLOG / GALERÍA DE RECUERDOS (blog.html)
+   ========================================================= */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;
+  padding:0 1rem 4rem;
+}
+
+.polaroid{
+  background:var(--bg-blanco);
+  border-radius:14px;
+  box-shadow:var(--sombra-lg);
+  overflow:hidden;
+  transform:rotate(-2deg);
+  transition:transform .3s;
+}
+.polaroid:nth-child(2n){transform:rotate(2deg);}
+.polaroid:hover{
+  transform:rotate(0deg) scale(1.05);
+}
+
+.polaroid img{
+  width:100%;
+  height:auto;          
+  object-fit:contain;
+  display:block;
+  background:#f9f9f9; 
+}
+
+/* texto centrado en el blog */
+blockquote{
+  font-size:1.25rem;
+  font-style:italic;
+  color:var(--rosa);
+  margin:1.6rem auto;
+  max-width:640px;
+  text-align:center;
+}
+
+/* título del blog */
+h1{
+  text-align:center;
+  color:var(--rosa);
+  margin:2.2rem 0 1rem;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width:600px){
+  #pregunta h1{ font-size:1.8rem; }
+  #pregunta button{ font-size:1rem; }
+  .polaroid img{ height:220px; }
+}
+
+/* ======== SECCIÓN COMBINADA (blog.html) ========= */
+.contenedor{
+  max-width:1200px;
+  margin:0 auto;
+  padding:2rem 1rem;
+  display:flex;
+  flex-wrap:wrap;
+  gap:2rem;
+}
+
+/* Galería compacta */
+.galeria-compacta{
+  flex:1 1 320px;
+  max-width:400px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:1rem;
+}
+.galeria-compacta .polaroid img{ height:200px; }
+
+/* Área de texto */
+.texto-adorno{
+  flex:1 1 280px;
+  display:flex;
+  flex-direction:column;
+  gap:1.2rem;
+}
+.texto-adorno p{
+  font-size:1.1rem;
+  background:var(--bg-blanco);
+  padding:1rem 1.25rem;
+  border-radius:12px;
+  box-shadow:var(--sombra-xs);
+}
+
+/* Responsive: pila en vertical < 700px */
+@media(max-width:700px){
+  .contenedor{ flex-direction:column; align-items:center; }
+  .galeria-compacta{ max-width:none; }
+}
+/* ============ Ajustes iPhone 11 / XR (≤ 414 px) ============ */
+@media (max-width:414px){
+
+  /* Título un poco más pequeño para que no quepa en dos líneas */
+  #pregunta h1{
+    font-size:1.8rem;  /* antes 2.3rem */
+  }
+
+  /* Botones ligeramente más estrechos */
+  #pregunta button{
+    padding:0.75rem 1.6rem; /* alto igual, ancho menor */
+  }
+
+  /* Polaroids más bajitas para que no se alargue el scroll */
+  .galeria-compacta .polaroid img{
+    height:160px;  /* prueba 150‑180 px según gusto */
+  }
+
+  /* Centrar aún más el texto si notas desbordes */
+  .texto-adorno p{
+    font-size:1rem;  /* opcional */
+  }
+}
+/* === Sticker perrito fijo === */
+.dog-sticker{
+  position:fixed;
+  right:16px;              /* distancia al borde */
+  bottom:16px;
+  width:60px;              /* tamaño pequeño */
+  height:auto;
+  z-index:9999;            /* por encima de todo */
+  pointer-events:none;     /* no bloquea clics */
+  /* Animación de “sube‑baja” suave */
+  animation:bob 3.5s ease-in-out infinite;
+}
+
+/* Efecto bob: se eleva y baja muy sutilmente */
+@keyframes bob{
+  0%,100%{ transform:translateY(0); }
+  50%    { transform:translateY(-6px); }
+}
